@@ -1,0 +1,15 @@
+.bg-default {
+	background: #0489B1;
+}
+
+@media screen and (max-width: 991px){
+
+	.nav-item .nav-link .nav-link-text, .nav-item .nav-link i  {
+		color: #A9D0F5;
+	}
+
+	.nav-item .nav-link .nav-link-text:hover {
+		color: #E0F8F7;
+	}
+
+}
