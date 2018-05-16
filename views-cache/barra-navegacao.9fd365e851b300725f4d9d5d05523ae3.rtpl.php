@@ -42,29 +42,12 @@
 						<span class="nav-link-text"> Administrador</span>
 					</a>
 					<ul class="sidenav-second-level collapse" id="linksAdministrador">
+<!-- 						<li>
+							<a href="/eventos-master/admin/cadastrar-administrador">Cadastrar Administrador</a>
+						</li> -->
 						<li>
-							<a href="login.html">Lista de endereços</a>
+							<a href="/eventos-master/admin/lista-administradores">Lista de administradores</a>
 						</li>
-						<li>
-							<a href="recuperar.html">Cadastrar endereço</a>
-						</li>
-						<li>
-							<a href="registro.html">Página Registro</a>
-						</li>
-						<li>
-							<a href="#link3nivel" class="nav-link-collapse collapse" data-toggle="collapse">Terceiro Nível</a>
-							<ul class="sidenav-third-level collapse" id="link3nivel">
-								<li>
-									<a href="#">Link 1</a>
-								</li>
-								<li>
-									<a href="#">Link 1</a>
-								</li>
-								<li>
-									<a href="#">Link 1</a>
-								</li>
-							</ul>
-						</li>	
 					</ul>					
 				</li>													
 			</ul>
@@ -76,11 +59,34 @@
 				</li>
 			</ul>
 			<ul class="navbar-nav ml-auto">
-				<li class="nav">
-					<a class="nav-link" href="#">
-						<i class="fa fa-sign-out"></i>
-						<span class="nav-link-text"> Sair</span>
-					</a>
+				<li class="nav  d-sm-block d-md-block">
+					<div class="btn-group nav-link">
+						<a class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+							<i class="fa fa-fw fa-bell"></i>
+							<span class="d-lg-none d-xl-none">Notificações</span>
+						</a>
+						<div class="dropdown-menu dropdown-menu-right">
+							<h6 class="dropdown-header">Novas Notificações</h6>
+							<div class="dropdown-divider"></div>
+							<a href="#" class="dropdown-item text-success">Novo cadastro de evento</a>
+							<a href="#" class="dropdown-item text-danger">Inscrições do evento encerradas</a>
+							<div class="dropdown-divider"></div>
+							<a href="#" class="dropdown-item small">Ver mais</a>
+						</div>
+					</div>
+				</li>
+				<li class="nav  d-sm-block d-md-block">
+					<div class="btn-group nav-link">
+						<a class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+							<i class="fa fa-user-circle"></i>
+							<span class="d-lg-none d-xl-none">Usuário</span>
+						</a>
+						<div class="dropdown-menu dropdown-menu-right">
+							<h6 class="dropdown-header">Conta</h6>
+							<a href="#" class="dropdown-item"> Perfil </a>
+							<a href="#" class="dropdown-item"> Sair </a>
+						</div>
+					</div>
 				</li>
 			</ul>
 		</div>

@@ -4,8 +4,14 @@ require 'vendor/autoload.php';
 
 use \Slim\Slim;
 use Eventos\PageAdmin;
+use Eventos\Model\Admin;
 
 $app = new Slim();
+
+$app->get( '/', function ()
+{
+	echo "Olá Mundo!";
+});
 
 $app->get( '/admin', function ()
 {
@@ -96,6 +102,14 @@ $app->get( '/admin/cadastrar-administrador', function ()
 	$pageAdmin = new PageAdmin();
 	$files = [ 'cabecalho', 'barra-navegacao', 'cadastrar-administrador', 'rodape-admin', 'rodape'];
 	$pageAdmin->drawPage( $files);
+});
+
+$app->post( '/admin/cadastrar-administrador', function ()
+{
+	$admin = new Admin();
+	$response = $admin->save($_POST);
+	header("Location: /eventos-master/admin/cadastrar-administrador?".$response);
+	exit;
 });
 
 $app->get( '/admin/lista-administradores', function ()

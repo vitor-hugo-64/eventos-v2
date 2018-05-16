@@ -1,5 +1,6 @@
 ((function ( w, d) {
 	'use strict';
+
 	var $form = d.querySelector("[data-js='form']");
 	var $input = d.querySelectorAll("[data-js='input']");
 
@@ -7,18 +8,9 @@
 		$input[0].focus();
 	}
 
-	var status = (w.location.href).charAt((w.location.href).length-1);
-
-	if (status == 1) {
-		$('#modal-success').modal('show');
-	} else if (status == 0) {
-		$('#modal-erro').modal('show');
-	} else if (status == 2) {
-		$('#modal-warning').modal('show');
-	}
-
 	if ($form) {
 		$form.addEventListener( 'submit', function (s) {
+			var aux = '';
 			for (var i = 0; i <= $input.length; i++) {
 				if (!$input[i].value) {
 					s.preventDefault();
@@ -30,17 +22,28 @@
 					$input[i].focus();
 					break;
 				}
-				if ($input[2]['name'] === 'senha' && $input[3]['name'] === 'repetir-senha') {
-					if ($input[2].value && $input[3].value) {
-						if ($input[2].value != $input[3].value) {
-							s.preventDefault();
-							w.alert("Informe duas senhas iguais!");
-							break;
-						}			
-					}				
-				}			
+				if($input[i]['name'] === 'senha'){
+					aux = $input[i].value;
+				}
+				if($input[i]['name'] === 'repetir_senha'){
+					if ($input[i].value !== aux) {
+						alert('Informe duas senhas iguais');
+						s.preventDefault();
+						break;						
+					}
+				}
 			}
-		}, false);		
+		}, false);
+	}
+
+
+	var status = (w.location.href).charAt((w.location.href).length-1);
+	if (status == 1) {
+		$('#modal-success').modal('show');
+	} else if (status == 0) {
+		$('#modal-erro').modal('show');
+	} else if (status == 2) {
+		$('#modal-warning').modal('show');
 	}
 
 })( window, document));

@@ -5,7 +5,7 @@
 					<h2 class="text-center mt-2 mb-4">Criar evento</h2>
 				</div>
 			</div>
-			<form method="POST" data-js="input">
+			<form method="POST" data-js="form">
 				<div class="row">
 					<div class="col-12">
 						<div class="card mt-2 mb-4 bg-white">

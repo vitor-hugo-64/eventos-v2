@@ -1,4 +1,4 @@
-	<div class="content-wrapper bg-white">
+<?php if(!class_exists('Rain\Tpl')){exit;}?>	<div class="content-wrapper bg-white">
 		<div class="container-fluid">
 			<div class="row">
 				<div class="col-12">
