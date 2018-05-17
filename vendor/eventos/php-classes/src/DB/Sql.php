@@ -6,10 +6,10 @@ use PDO;
 
 class Sql extends PDO
 {
-	const HOSTNAME = "172.16.0.5";
-	const USERNAME = "site";
-	const PASSWORD = "ChWoaTBxTZEzVSHX";
-	const DBNAME = "certificados";
+	const HOSTNAME = "127.0.0.1";
+	const USERNAME = "root";
+	const PASSWORD = "nunca mais10";
+	const DBNAME = "eventos";
 	private $con;		
 	
 	function __construct()

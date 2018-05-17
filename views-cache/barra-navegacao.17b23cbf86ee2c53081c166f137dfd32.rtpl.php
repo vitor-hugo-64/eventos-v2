@@ -1,4 +1,4 @@
-<body class="bg-dark fixed-nav sticky-footer" id="page-top">
+<?php if(!class_exists('Rain\Tpl')){exit;}?><body class="bg-dark fixed-nav sticky-footer" id="page-top">
 
 	<!-- Navegação -->
 	<nav class="navbar navbar-expand-lg navbar-dark fixed-top bg-default" id="mainNav">

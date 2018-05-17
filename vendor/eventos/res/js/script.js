@@ -41,7 +41,7 @@
 	if (status == 1) {
 		$('#modal-success').modal('show');
 	} else if (status == 0) {
-		$('#modal-erro').modal('show');
+		$('#modal-error').modal('show');
 	} else if (status == 2) {
 		$('#modal-warning').modal('show');
 	}
