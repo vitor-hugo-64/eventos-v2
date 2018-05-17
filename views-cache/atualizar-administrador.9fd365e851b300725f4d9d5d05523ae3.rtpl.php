@@ -34,7 +34,7 @@
 									</div>
 									<div class="form-check">
 										<input class="form-check-input" type="checkbox" value="s" id="trocar_senha" name="trocar_senha"<?php if( $admin["trocar_senha"] == 's' ){ ?>checked<?php } ?>>
-										<label class="form-check-label" for="alterar_senha">
+										<label class="form-check-label" for="trocar_senha">
 											Alterar senha no próximo login
 										</label>
 									</div>

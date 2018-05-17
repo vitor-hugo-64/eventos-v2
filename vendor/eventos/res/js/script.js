@@ -38,12 +38,9 @@
 
 
 	var status = (w.location.href).charAt((w.location.href).length-1);
-	if (status == 1) {
-		$('#modal-success').modal('show');
-	} else if (status == 0) {
-		$('#modal-error').modal('show');
-	} else if (status == 2) {
-		$('#modal-warning').modal('show');
+	if (status) {
+		var modal = "#modal" + status;
+		$(modal).modal('show');
 	}
 
 })( window, document));

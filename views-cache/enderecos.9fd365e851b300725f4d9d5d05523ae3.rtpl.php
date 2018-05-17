@@ -1,9 +1,9 @@
-<div class="content-wrapper bg-white">
+<?php if(!class_exists('Rain\Tpl')){exit;}?><div class="content-wrapper bg-white">
 	<div class="container-fluid">
 		<div class="row">
 			<div class="col-12">
 				<h2 class="mt-2 mb-4">
-					Lista de administradores
+					Lista de endereços
 					<hr>
 				</h2>
 			</div>
@@ -13,35 +13,52 @@
 				<div class="card mb-4">
 					<div class="card-header">
 						<span class="h4">
-							<i class="fa fa-users"></i>
-							Estes são os administradores já cadastrados
+							<i class="fa fa-location-arrow"></i>
+							Estes são os endereços já cadastrados
 						</span>
-						<a href="/eventos-master/admin/administradores/cadastrar-administrador" class="btn btn-success btn-sm float-right btn-block-sm">
-							<i class="fa fa-user-plus"></i> Adicionar
+						<a href="/eventos-master/admin/enderecos/cadastrar-endereco" class="btn btn-success btn-sm float-right btn-block-sm">
+							<i class="fa fa-map-marker"></i> Adicionar
 						</a>
 					</div>
 					<div class="card-body bg-white px-0 py-0">
 						<div class="table-responsive">
 							<table class="table mb-0">
-								<tbody>
-									{loop="$admins"}
+								<thead>
 									<tr>
-										<th scope="row">
-											{if="$value.conta_ativa == 's'"}
-											<span class="text-success ml-2"><i class="fa fa-user"></i></span>
-											{else}
-											<span class="text-danger ml-2"><i class="fa fa-user"></i></span>
-											{/if}
+										<th scope="col">
+											<div class="ml-2">
+												Descrição
+											</div>
 										</th>
-										<td>{$value.nome}</td>
-										<td>{$value.email}</td>
+										<th scope="col">Rua</th>
+										<th scope="col">N°</th>
+										<th scope="col">Bairro</th>
+										<th scope="col">Cidade</th>
+										<th scope="col">Estado</th>
+										<th scope="col">País</th>
+									</tr>
+								</thead>
+								<tbody>
+									<?php $counter1=-1;  if( isset($address) && ( is_array($address) || $address instanceof Traversable ) && sizeof($address) ) foreach( $address as $key1 => $value1 ){ $counter1++; ?>
+									<tr>
 										<td>
-											<a href="/eventos-master/admin/administradores/atualizar-administrador/{$value.cod_administrador}" class="btn btn-primary btn-sm float-right mr-2">
+											<div class="ml-2">
+												<?php echo htmlspecialchars( $value1["descricao"], ENT_COMPAT, 'UTF-8', FALSE ); ?>
+											</div>
+										</td>
+										<td><?php echo htmlspecialchars( $value1["rua"], ENT_COMPAT, 'UTF-8', FALSE ); ?></td>
+										<td><?php echo htmlspecialchars( $value1["numero"], ENT_COMPAT, 'UTF-8', FALSE ); ?></td>
+										<td><?php echo htmlspecialchars( $value1["bairro"], ENT_COMPAT, 'UTF-8', FALSE ); ?></td>
+										<td><?php echo htmlspecialchars( $value1["cidade"], ENT_COMPAT, 'UTF-8', FALSE ); ?></td>
+										<td><?php echo htmlspecialchars( $value1["estado"], ENT_COMPAT, 'UTF-8', FALSE ); ?></td>
+										<td><?php echo htmlspecialchars( $value1["pais"], ENT_COMPAT, 'UTF-8', FALSE ); ?></td>
+										<td>
+											<a href="/eventos-master/admin/enderecos/atualizar-endereco/<?php echo htmlspecialchars( $value1["cod_endereco"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" class="btn btn-primary btn-sm float-right mr-2">
 												<i class="fa fa-edit"></i> Editar
 											</a>
 										</td>
 									</tr>
-									{/loop}
+									<?php } ?>
 								</tbody>
 							</table>
 						</div>

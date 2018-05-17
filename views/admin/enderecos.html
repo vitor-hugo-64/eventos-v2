@@ -3,7 +3,7 @@
 		<div class="row">
 			<div class="col-12">
 				<h2 class="mt-2 mb-4">
-					Lista de administradores
+					Lista de endereços
 					<hr>
 				</h2>
 			</div>
@@ -13,30 +13,47 @@
 				<div class="card mb-4">
 					<div class="card-header">
 						<span class="h4">
-							<i class="fa fa-users"></i>
-							Estes são os administradores já cadastrados
+							<i class="fa fa-location-arrow"></i>
+							Estes são os endereços já cadastrados
 						</span>
-						<a href="/eventos-master/admin/administradores/cadastrar-administrador" class="btn btn-success btn-sm float-right btn-block-sm">
-							<i class="fa fa-user-plus"></i> Adicionar
+						<a href="/eventos-master/admin/enderecos/cadastrar-endereco" class="btn btn-success btn-sm float-right btn-block-sm">
+							<i class="fa fa-map-marker"></i> Adicionar
 						</a>
 					</div>
 					<div class="card-body bg-white px-0 py-0">
 						<div class="table-responsive">
 							<table class="table mb-0">
-								<tbody>
-									{loop="$admins"}
+								<thead>
 									<tr>
-										<th scope="row">
-											{if="$value.conta_ativa == 's'"}
-											<span class="text-success ml-2"><i class="fa fa-user"></i></span>
-											{else}
-											<span class="text-danger ml-2"><i class="fa fa-user"></i></span>
-											{/if}
+										<th scope="col">
+											<div class="ml-2">
+												Descrição
+											</div>
 										</th>
-										<td>{$value.nome}</td>
-										<td>{$value.email}</td>
+										<th scope="col">Rua</th>
+										<th scope="col">N°</th>
+										<th scope="col">Bairro</th>
+										<th scope="col">Cidade</th>
+										<th scope="col">Estado</th>
+										<th scope="col">País</th>
+									</tr>
+								</thead>
+								<tbody>
+									{loop="$address"}
+									<tr>
 										<td>
-											<a href="/eventos-master/admin/administradores/atualizar-administrador/{$value.cod_administrador}" class="btn btn-primary btn-sm float-right mr-2">
+											<div class="ml-2">
+												{$value.descricao}
+											</div>
+										</td>
+										<td>{$value.rua}</td>
+										<td>{$value.numero}</td>
+										<td>{$value.bairro}</td>
+										<td>{$value.cidade}</td>
+										<td>{$value.estado}</td>
+										<td>{$value.pais}</td>
+										<td>
+											<a href="/eventos-master/admin/enderecos/atualizar-endereco/{$value.cod_endereco}" class="btn btn-primary btn-sm float-right mr-2">
 												<i class="fa fa-edit"></i> Editar
 											</a>
 										</td>

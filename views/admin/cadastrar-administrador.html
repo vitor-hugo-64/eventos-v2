@@ -44,8 +44,8 @@
 									</label>
 								</div>
 								<div class="form-check">
-									<input class="form-check-input" type="checkbox" value="s" id="alterar_senha" name="alterar_senha">
-									<label class="form-check-label" for="alterar_senha">
+									<input class="form-check-input" type="checkbox" value="s" id="trocar_senha" name="trocar_senha">
+									<label class="form-check-label" for="trocar_senha">
 										Alterar senha no próximo login
 									</label>
 								</div>

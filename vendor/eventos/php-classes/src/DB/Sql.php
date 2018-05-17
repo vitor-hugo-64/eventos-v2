@@ -6,9 +6,9 @@ use PDO;
 
 class Sql extends PDO
 {
-	const HOSTNAME = "127.0.0.1";
-	const USERNAME = "root";
-	const PASSWORD = "nunca mais10";
+	const HOSTNAME = "127.16.0.5";
+	const USERNAME = "site";
+	const PASSWORD = "ChWoaTBxTZEzVSHX";
 	const DBNAME = "eventos";
 	private $con;		
 	
@@ -40,7 +40,8 @@ class Sql extends PDO
 	{
 		$stmt = $this->con->prepare($rowQuery);
 		$this->setParams( $stmt, $params);
-		if ($stmt->execute()){ return 1; } else { return 0; }
+		$stmt->execute();
+		return $stmt->fetchAll(PDO::FETCH_ASSOC);
 	}
 
 	public function select( $rowQuery, $params = array('' => ''))

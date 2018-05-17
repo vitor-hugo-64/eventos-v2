@@ -5,50 +5,52 @@
 					<h2 class="text-center">Atualizar informações</h2>
 				</div>
 			</div>
-			<div class="row">
-				<div class="col-12">
-					<div class="card  bg-white">
-						<div class="card-header">
-							<span class="h4"><i class="fa fa-edit"></i> Atualize os campos necessários</span>
-							<a href="#" class="btn btn-success btn-sm float-right">Confirmar</a>
-						</div>
-						<div class="card-body  px-4 py-4">
-							<form method="POST" data-js="form">
+			<form method="POST" data-js="form" action="/eventos-master/admin/enderecos/atualizar-endereco/{$address.cod_endereco}">
+				<div class="row">
+					<div class="col-12">
+						<div class="card  bg-white">
+							<div class="card-header">
+								<span class="h4"><i class="fa fa-edit"></i> Atualize os campos necessários</span>
+								<input type="submit" class="btn btn-success btn-sm float-right" value="Confirmar">
+							</div>
+							<div class="card-body  px-4 py-4">
+
 								<div class="form-group">
-									<label for="nome_lugar">Nome do lugar: </label>
-									<input type="text" name="nome_lugar" id="nome_lugar" class="form-control" value="Nome do lugar" data-js="input">
+									<label for="descricao">Nome do lugar: </label>
+									<input type="text" name="descricao" id="descricao" value="{$address.descricao}" class="form-control" value="Nome do lugar" data-js="input">
 								</div>
 								<div class="form-row">
 									<div class="form-group col-md-6">
 										<label for="rua">Rua: </label>
-										<input type="text" name="rua" id="rua" class="form-control" value="Rua" data-js="input">
+										<input type="text" name="rua" id="rua" value="{$address.rua}" class="form-control" value="Rua" data-js="input">
 									</div>
 									<div class="form-group col-md-2">
 										<label for="numero">Nº: </label>
-										<input type="number" name="numero" id="numero" class="form-control" value="00" data-js="input">
+										<input type="number" name="numero" id="numero" value="{$address.numero}" class="form-control" value="00" data-js="input">
 									</div>
 									<div class="form-group col-md-4">
 										<label for="bairro">Bairro: </label>
-										<input type="text" name="bairro" id="bairro" class="form-control" value="Bairro" data-js="input">
+										<input type="text" name="bairro" id="bairro" value="{$address.bairro}" class="form-control" value="Bairro" data-js="input">
 									</div>
 								</div>
 								<div class="form-row">
 									<div class="form-group col-md-6">
 										<label for="cidade">Cidade: </label>
-										<input type="text" name="cidade" id="cidade" class="form-control" value="Cidade" data-js="input">
+										<input type="text" name="cidade" id="cidade" value="{$address.cidade}" class="form-control" value="Cidade" data-js="input">
 									</div>
 									<div class="form-group col-md-2">
 										<label for="estado">Estado: </label>
-										<input type="text" name="estado" id="estado" class="form-control" value="RS" maxlength="2" data-js="input">
+										<input type="text" name="estado" id="estado" value="{$address.estado}" class="form-control" value="RS" maxlength="2" data-js="input">
 									</div>
 									<div class="form-group col-md-4">
 										<label for="pais">País: </label>
-										<input type="text" name="pais" id="pais" class="form-control" value="País" data-js="input">
+										<input type="text" name="pais" id="pais" value="{$address.pais}" class="form-control" value="País" data-js="input">
 									</div>
 								</div>
-							</form>
+
+							</div>
 						</div>
 					</div>
-				</div>
+				</form>
 			</div>
 		</div>
