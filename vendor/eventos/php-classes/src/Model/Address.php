@@ -61,7 +61,7 @@ class Address extends Model
 				':rua' => $this->getrua(),
 				':bairro' => $this->getbairro(),
 				':cidade' => $this->getcidade(),
-				':estado' => $this->getpais(),
+				':estado' => $this->getestado(),
 				':pais' => $this->getpais()
 			)
 		);

@@ -1,0 +1,63 @@
+	<div class="content-wrapper bg-white">
+		<div class="container-fluid">
+			<div class="row">
+				<div class="col-12">
+					<h2 class="mt-2 mb-4">
+						Lista de Eventos
+						<hr>
+					</h2>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-12">
+					<div class="card">
+						<div class="card-header">
+							<span class="h4">
+								<i class="fa fa-location-arrow"></i>
+								Estes são os seus eventos e os que você tem acesso
+							</span>
+							<a href="/eventos-master/admin/eventos/criar-evento" class="btn btn-success btn-sm float-right btn-block-sm">
+								<i class="fa fa-map-marker"></i> Adicionar
+							</a>
+						</div>
+						<div class="card-body bg-white px-0 py-0">
+							<div class="table-responsive">
+								<table class="table mb-0">
+									<thead>
+										<tr>
+											<th scope="col">
+												<div class="ml-2">
+													Descrição
+												</div>
+											</th>
+											<th scope="col">Data Realização</th>
+											<th scope="col">Endereco</th>
+											<th scope="col">Administrador</th>
+										</tr>
+									</thead>
+									<tbody>
+										{loop="$events"}
+										<tr>
+											<td>
+												<div class="ml-2">
+													{$value.descricao_evento}
+												</div>
+											</td>
+											<td>{$value.data_realizacao}</td>
+											<td>{$value.descricao_endereco}</td>
+											<td>{$value.nome}</td>
+											<td>
+												<a href="/eventos-master/admin/eventos/atualizar-evento/{$value.cod_evento}" class="btn btn-primary btn-sm float-right mr-2">
+													<i class="fa fa-edit"></i> Editar
+												</a>
+											</td>
+										</tr>
+										{/loop}
+									</tbody>
+								</table>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>

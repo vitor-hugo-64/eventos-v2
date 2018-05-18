@@ -1,16 +1,43 @@
 <?php
 
+session_start();
+
 require 'vendor/autoload.php';
 
 use \Slim\Slim;
+use \Eventos\Page;
+use \Eventos\Model\User;
 use \Eventos\PageAdmin;
 use \Eventos\Model\Admin;
 use \Eventos\Model\Address;
+use \Eventos\Model\Event;
 
 $app = new Slim();
 
+$app->get( '/', function ()
+{
+	$page = new Page();
+	$files = array( 'cabecalho', 'login-admin', 'rodape');
+	$page->drawPage( $files);
+});
+
+$app->post( '/', function ()
+{
+	Admin::login( $_POST['email'], $_POST['senha']);
+	header('Location: /eventos-master/admin');
+	exit;
+});
+
+$app->get( '/admin/logout', function ()
+{
+	Admin::logout();
+	header('Location: /eventos-master/');
+	exit;
+});
+
 $app->get( '/admin', function ()
 {
+	Admin::verifyLogin();
 	$pageAdmin = new PageAdmin();
 	$files = [ 'cabecalho-um', 'barra-navegacao', 'index', 'rodape-um'];
 	$pageAdmin->drawPage( $files);
@@ -56,6 +83,29 @@ $app->post( '/admin/enderecos/atualizar-endereco/:idaddress', function ($idaddre
 	$address->update($idaddress);
 	header('Location: /eventos-master/admin/enderecos');
 	exit;
+});
+
+$app->get( '/admin/eventos', function ()
+{
+	$datas = array( 'events' => Event::listAll());
+	$pageAdmin = new PageAdmin();
+	$files = array( 'cabecalho-dois', 'barra-navegacao', 'eventos', 'rodape-dois');
+	$pageAdmin->drawPage($files, $datas);
+});
+
+$app->get( '/admin/eventos/criar-evento', function ()
+{
+	$address = array( 'address' => Address::listAll());	
+	$pageAdmin = new pageAdmin();
+	$files = array( 'cabecalho-tres', 'barra-navegacao', 'criar-evento', 'rodape-tres');
+	$pageAdmin->drawPage( $files, $address);
+});
+
+$app->post( '/admin/eventos/criar-evento', function ()
+{
+	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	$event = new Event();
+	$event->save($_POST);
 });
 
 $app->get( '/admin/administradores', function ()

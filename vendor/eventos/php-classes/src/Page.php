@@ -1,23 +1,27 @@
 <?php
-	namespace Eventos;
-	use Rain\Tpl;
-	class Page
+
+namespace Eventos;
+
+use Rain\Tpl;
+
+class Page
+{
+	private $tpl;
+
+	function __construct()
 	{
-		private $config;
-		
-		function __construct()
-		{
-			$config = array( 'tpl_dir' => 'views'.DIRECTORY_SEPARATOR, 'cache_dir' => 'views-cache'.DIRECTORY_SEPARATOR );
-			Tpl::configure( $config );
+		$config = array( 'tpl_dir' => 'views'.DIRECTORY_SEPARATOR, 'cache_dir' => 'views-cache'.DIRECTORY_SEPARATOR );
+		Tpl::configure( $config );
+		$this->tpl = new Tpl();
+
+	}
+	public function drawPage($files = array(null), $params = array(null))
+	{
+		foreach ($params as $key => $value) {
+			$this->tpl->assign( $key, $value);
 		}
-		public function drawPage($files = array(null), $params = array(null))
-		{
-			$tpl = new Tpl();
-			foreach ($params as $key => $value) {
-				$tpl->assign( $key, $value);
-			}
-			foreach ($files as $value) {
-				$tpl->draw($value);
-			}
+		foreach ($files as $value) {
+			$this->tpl->draw($value);
 		}
 	}
+}

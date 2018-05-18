@@ -65,7 +65,7 @@
 						<div class="dropdown-menu dropdown-menu-right">
 							<h6 class="dropdown-header">Conta</h6>
 							<a href="#" class="dropdown-item"> Perfil </a>
-							<a href="#" class="dropdown-item"> Sair </a>
+							<a href="/eventos-master/admin/logout" class="dropdown-item"> Sair </a>
 						</div>
 					</div>
 				</li>

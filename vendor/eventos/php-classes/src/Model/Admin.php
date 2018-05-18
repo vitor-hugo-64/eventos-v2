@@ -7,12 +7,52 @@ use \Eventos\Model;
 
 class Admin extends Model
 {
+	const SESSION = 'Admin';
 	private $sql;
 
 	function __construct()
 	{
 		$this->sql = new Sql();
 	}
+
+	public static function login( $email, $senha)
+	{
+		$sql = new Sql();
+		$results = $sql->select("SELECT * from c_administrador WHERE email = :email", array( ':email' => $email));
+
+		if (count($results) === 0) {
+			header('Location: /eventos-master/');
+			exit;
+		}
+
+		$datas = $results[0];
+
+		if (crypt($senha, 'ead') == $datas['senha']) {
+			
+			$admin = new Admin();
+			$admin->setData($datas);
+			$_SESSION[Admin::SESSION] = $admin->getDatas();
+			return $admin;
+
+		} else {
+			header('Location: /eventos-master/');
+			exit;
+		}
+
+	}
+
+	public static function logout()
+	{
+		$_SESSION[Admin::SESSION] = NULL;
+	}
+
+	public function verifyLogin()
+	{
+		if (!isset($_SESSION[Admin::SESSION]) || !$_SESSION[Admin::SESSION] || $_SESSION[Admin::SESSION]['cod_administrador'] < 0) {
+			header('Location: /eventos-master/');
+			exit;
+		}
+	}	
 
 	public function get($iduser)
 	{
@@ -36,7 +76,7 @@ class Admin extends Model
 			array(
 				':nome' => $this->getnome(),
 				':email' => $this->getemail(),
-				':senha' => sha1($this->getsenha()),
+				':senha' => crypt($this->getsenha(), 'ead'),
 				':super_admin' => $this->getsuper_admin(),
 				':trocar_senha' => $this->gettrocar_senha()
 			)
@@ -46,7 +86,6 @@ class Admin extends Model
 
 	public function update($idadmin)
 	{
-
 		$updateRow = "SELECT ATUALIZAR_ADMINISTRADOR( :cod_administrador, :nome, :email, :super_admin, :trocar_senha, :conta_ativa) AS CA FROM DUAL";
 		
 		$response = $this->sql->query( $updateRow,

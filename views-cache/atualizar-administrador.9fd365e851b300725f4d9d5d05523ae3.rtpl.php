@@ -2,7 +2,10 @@
 		<div class="container-fluid">
 			<div class="row">
 				<div class="col-12">
-					<h2 class="text-center mt-2 mb-4">Atualização de administrador</h2>
+					<h2 class="mt-2 mb-4">
+						Atualização de administrador
+						<hr>
+					</h2>
 				</div>
 			</div>
 			<form method="POST" data-js="form" action="/eventos-master/admin/administradores/atualizar-administrador/<?php echo htmlspecialchars( $admin["cod_administrador"], ENT_COMPAT, 'UTF-8', FALSE ); ?>">
