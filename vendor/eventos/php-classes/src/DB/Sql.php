@@ -6,9 +6,9 @@ use PDO;
 
 class Sql extends PDO
 {
-	const HOSTNAME = "localhost";
-	const USERNAME = "root";
-	const PASSWORD = "nunca mais10";
+	const HOSTNAME = "172.16.0.5";
+	const USERNAME = "site";
+	const PASSWORD = "ChWoaTBxTZEzVSHX";
 	const DBNAME = "eventos";
 	private $con;		
 	

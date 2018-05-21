@@ -1,0 +1,42 @@
+<div class="content-wrapper bg-white">
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col-12 mt-2 mb-4">
+				<h2 class="text-center">Criaação de permissão de evento</h2>
+			</div>
+		</div>
+		<form method="POST" data-js="form" action="/eventos-master/admin/event-permissions/create-event-permission">
+			<div class="row">
+				<div class="col-12">
+					<div class="card mb-4  bg-white">
+						<div class="card-header">
+							<span class="h4"><i class="fa fa-table"></i> Informe os dados</span>
+						</div>
+						<div class="card-body  px-4 py-4">
+							<div class="form-row">
+								<div class="form-group col-md-6">
+									<label for="evento_acessado">Evento a ser acessado: </label>
+									<select class="form-control" name="cod_evento" id="cod_evento" data-js="input">
+										{loop="$events"}
+										<option value="{$value.cod_evento}">{$value.descricao_evento}</option>
+										{/loop}
+									</select>
+								</div>
+								<div class="form-group col-md-6">
+									<label for="admin-acessa">Administrador à ter acesso: </label>
+									<select class="form-control" name="cod_administrador" id="cod_administrador" data-js="input">
+										{loop="$admins"}
+										<option value="{$value.cod_administrador}">{$value.nome}</option>
+										{/loop}
+									</select>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="text-center mb-4">
+						<button class="btn btn-primary" type="submit">Adicionar permissão</button>
+					</div>
+				</div>
+			</div>
+		</form>
+	</div>

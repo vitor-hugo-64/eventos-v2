@@ -1,0 +1,54 @@
+CREATE DEFINER=`admin`@`%` FUNCTION `INSERIR_REGISTRO`( nome_informado varchar(50), email_informado varchar(50), codigo_evento INT) RETURNS int(11)
+BEGIN
+	
+    -- declaração de variáveis e cursor --
+    declare c_cod_livro, c_numero_livro, c_quantidade_folha, c_cod_folha, c_numero_folha_livro, c_quantidade_registro, quantidade_folhas, quantidade_registros, existe_registro, codigo_participante, numero_registro int;
+	declare c_lf cursor for
+		select l.cod_livro, l.numero_livro, l.quantidade_folha, f.cod_folha, f.numero_folha_livro, f.quantidade_registro from c_livro l inner join c_folha f on l.cod_livro = f.cod_livro where l.cod_livro = (select max(cod_livro) from c_livro) and f.cod_folha = (select max(cod_folha) from c_folha);
+    
+    -- abre o cursor e atribui às variáveis --
+    open c_lf;
+		fetch c_lf into c_cod_livro, c_numero_livro, c_quantidade_folha, c_cod_folha, c_numero_folha_livro, c_quantidade_registro;
+    close c_lf;
+    
+    -- pega a quantidade de folhas e registros
+    set quantidade_folhas = (select count(*) from c_folha where cod_livro = c_cod_livro);
+    set quantidade_registros = (select count(*) from c_registro where cod_folha = c_cod_folha);
+    set numero_registro = (select max(numero_registro_livro) from c_registro where cod_folha = c_cod_folha);
+    if numero_registro is null then
+		set numero_registro = 0;
+    end if;
+    
+    -- verifica se ja existe um usuário cadastrado com o email informado --
+    set codigo_participante = (select cod_participante from c_participante where email = email_informado);
+    -- caso não existe ele irá inserir um novo usuário --
+    if codigo_participante is null then
+		insert into c_participante values( default, nome_informado, email_informado);
+        set codigo_participante = (select cod_participante from c_participante where cod_participante = (select max(cod_participante) from c_participante));
+    end if;
+    
+    
+    -- verifica se já existe um registro com o email e o código do evento informado --
+    set existe_registro = (select r.cod_registro from c_participante p inner join c_registro r on p.cod_participante = r.cod_participante where p.email = email_informado and r.cod_evento = codigo_evento);
+    -- caso o registro exista ele irá retornar uma resposta, caso não exista continuará o processo
+    if existe_registro is null then
+		
+        if quantidade_registros < c_quantidade_registro and quantidade_folhas <= c_quantidade_folha then
+			insert into c_registro values( default, (numero_registro + 1), codigo_evento, codigo_participante, default, (select max(cod_folha) from c_folha));
+            return 1;
+		elseif quantidade_registros = c_quantidade_registro and quantidade_folhas < c_quantidade_folha then
+			insert into c_folha values( default, (c_numero_folha_livro + 1), c_quantidade_registro, c_cod_livro);
+            insert into c_registro values( default, (numero_registro + 1), codigo_evento, codigo_participante, default, (select max(cod_folha) from c_folha));
+            return 3;
+		else
+			insert into c_livro values( default, (c_numero_livro + 1), c_quantidade_folha);
+			insert into c_folha values( default, 1, c_quantidade_registro, (select max(cod_livro) from c_livro));
+            insert into c_registro values( default, 1, codigo_evento, codigo_participante, default, (select max(cod_folha) from c_folha));        
+			return 4;
+        end if;
+        
+	else
+		return 2;
+    end if;
+	
+END;

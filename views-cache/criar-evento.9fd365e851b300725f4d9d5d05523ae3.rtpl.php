@@ -65,7 +65,7 @@
 								</div>
 								<div class="form-group">
 									<label for="corpo-certificado">Corpo do certificado (não informe data e horário): </label>
-									<textarea name="corpo-certificado" id="corpo-certificado" class="form-control" placeholder="Corpo do certificado" data-js="input">Participou do nosso evento.</textarea>
+									<textarea name="corpo_certificado" id="corpo-certificado" class="form-control" placeholder="Corpo do certificado" data-js="input">Participou do nosso evento.</textarea>
 								</div>
 							</div>
 						</div>

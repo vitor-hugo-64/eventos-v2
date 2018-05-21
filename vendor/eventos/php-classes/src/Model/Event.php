@@ -50,23 +50,21 @@ class Event extends Model
 
 	public function update($idevento)
 	{
-		// $updateRow = "select ATUALIZAR_EVENTO( :cod_evento, :descricao_evento, :data_realizacao, :cod_endereco, :inscricoes_abertas, :cod_administrador, :inicio_certificado, :corpo_certificado) AS AE from dual";
+		$updateRow = "SELECT ATUALIZAR_EVENTO( :cod_evento, :descricao_evento, :data_realizacao, :cod_endereco, :inscricoes_abertas, :cod_administrador, :inicio_certificado, :corpo_certificado) AS AE FROM dual";
 
-		// $response = $this->sql->query( $updateRow, 
-		// 	array(
-		// 		':cod_evento' => $idevento,
-		// 		':descricao_evento' => $this->getdescricao_evento(),
-		// 		':data_realizacao' => $this->getdata_realizacao(),
-		// 		':cod_endereco' => $this->getcod_endereco(),
-		// 		':inscricoes_abertas' => $this->getinscricoes_abertas(),
-		// 		':cod_administrador' => $this->getcod_administrador(),
-		// 		':inicio_certificado' => $this->getinicio_certificado(),
-		// 		':corpo_certificado' => $this->getcorpo_certificado()
-		// 	)
-		// );
+		$response = $this->sql->query( $updateRow, 
+			array(
+				':cod_evento' => $idevento,
+				':descricao_evento' => $this->getdescricao_evento(),
+				':data_realizacao' => $this->getdata_realizacao(),
+				':cod_endereco' => $this->getcod_endereco(),
+				':inscricoes_abertas' => $this->getinscricoes_abertas(),
+				':cod_administrador' => $this->getcod_administrador(),
+				':inicio_certificado' => $this->getinicio_certificado(),
+				':corpo_certificado' => $this->getcorpo_certificado()
+			)
+		);
 
-		echo json_encode($this->getDatas());
-
-		// echo json_encode($response);
+		echo json_encode($response);
 	}
 }

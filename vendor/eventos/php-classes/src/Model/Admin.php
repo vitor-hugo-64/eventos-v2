@@ -40,7 +40,7 @@ class Admin extends Model
 			if ($_SESSION[Admin::SESSION]['trocar_senha'] === 'n') {
 				return '/admin';
 			} else {
-				return '/trocar-senha';
+				return '/trocar-senha?0';
 			}
 
 		} else {
@@ -146,6 +146,5 @@ class Admin extends Model
 
 		return ($response[0]['US']);
 	}
-
 
 }

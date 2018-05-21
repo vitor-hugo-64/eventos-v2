@@ -11,6 +11,7 @@ use \Eventos\PageAdmin;
 use \Eventos\Model\Admin;
 use \Eventos\Model\Address;
 use \Eventos\Model\Event;
+use \Eventos\Model\EventPermission;
 
 $app = new Slim();
 
@@ -150,11 +151,12 @@ $app->post( '/admin/eventos/atualizar-evento/:idevento/:inscricoesabertas', func
 	$event->setdata_realizacao($_POST['data_realizacao']." ".$_POST['hora']);
 	$event->setcod_endereco($_POST['cod_endereco']);
 	$event->setinicio_certificado($_POST['inicio_certificado']);
+	$event->setcod_administrador($_SESSION['Admin']['cod_administrador']);
 	$event->setcorpo_certificado($_POST['corpo_certificado']);
 	$event->setinscricoes_abertas($inscricoesabertas);
 	$event->update($idevento);
-	// header('Location: /eventos-master/admin/eventos');
-	// exit;
+	header('Location: /eventos-master/admin/eventos');
+	exit;
 });
 
 $app->get( '/admin/administradores', function ()
@@ -199,6 +201,41 @@ $app->post( '/admin/administradores/atualizar-administrador/:idadmin', function 
 	$admin->setData($_POST);
 	$response = $admin->update($idadmin);
 	header("Location: /eventos-master/admin/administradores");
+	exit;
+});
+
+$app->get( '/admin/event-permissions', function ()
+{
+	Admin::verifyLogin();
+	$datas = [ 'admin' => $_SESSION['Admin'], 'permissions' => EventPermission::listAll()];
+	$pageAdmin = new PageAdmin();
+	$files = array( 'cabecalho-dois', 'barra-navegacao', 'event-permissions', 'rodape-dois');
+	$pageAdmin->drawPage( $files, $datas);
+});
+
+$app->get( '/admin/event-permissions/create-event-permission', function ()
+{
+	Admin::verifyLogin();
+	$pageAdmin = new PageAdmin();
+	$datas = array( 'admin' => $_SESSION['Admin'], 'events' => Event::listAll(), 'admins' => Admin::listAll());
+	$files = array( 'cabecalho-tres', 'barra-navegacao', 'create-event-permission', 'rodape-tres');
+	$pageAdmin->drawPage( $files, $datas);
+});
+
+$app->post( '/admin/event-permissions/create-event-permission', function ()
+{
+	$eventP = new EventPermission();
+	$eventP->setData($_POST);
+	$eventP->createEventPermission();
+	header('Location: /eventos-master/admin/event-permissions');
+	exit;
+});
+
+$app->get( '/admin/event-permissions/delete-event-permission/:idaccess', function ($idaccess)
+{
+	$eventP = new EventPermission();
+	$eventP->deleteEventPermission($idaccess);
+	header('Location: /eventos-master/admin/event-permissions');
 	exit;
 });
 

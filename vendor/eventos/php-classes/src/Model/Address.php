@@ -57,7 +57,7 @@ class Address extends Model
 			array(
 				':cod_endereco' => $idaddress,
 				':descricao' => $this->getdescricao(),
-				':numero' => $this->getnumero(),
+				':numero' => (int)$this->getnumero(),
 				':rua' => $this->getrua(),
 				':bairro' => $this->getbairro(),
 				':cidade' => $this->getcidade(),

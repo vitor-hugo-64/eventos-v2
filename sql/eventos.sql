@@ -1,5 +1,5 @@
-﻿# Host: 127.0.0.1  (Version 5.7.21-log)
-# Date: 2018-05-21 03:43:20
+﻿# Host: 172.16.0.5  (Version 5.7.21-0ubuntu0.16.04.1)
+# Date: 2018-05-21 14:50:35
 # Generator: MySQL-Front 6.0  (Build 2.20)
 
 
@@ -17,13 +17,13 @@ CREATE TABLE `c_administrador` (
   `trocar_senha` char(1) NOT NULL DEFAULT 'n',
   `conta_ativa` enum('s','n') DEFAULT 's',
   PRIMARY KEY (`cod_administrador`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=latin1;
 
 #
 # Data for table "c_administrador"
 #
 
-INSERT INTO `c_administrador` VALUES (3,'Vitor Hugo Balon de Oliveira','vitorhugooliveira64@gmail.com','eae.DhB.cUkM.','2018-05-20 23:27:48','s','n','s'),(4,'Badanha de Oliveira','badanha@badanha.com','ea76/LXahnbsQ','2018-05-20 23:37:57','s','n','s'),(5,'teste','teste@teste.com','ea76/LXahnbsQ','2018-05-21 00:01:06','n','n','n');
+INSERT INTO `c_administrador` VALUES (8,'Vitor Hugo Balon de Oliveira','vitorhugooliveira64@gmail.com','eae.DhB.cUkM.','2018-05-21 09:10:04','s','n','s'),(9,'Danilo Oliveira','danilo@liberato.com.br','eaMhCeXdKUNZs','2018-05-21 10:17:22','s','n','s'),(10,'Sandra Oliveira','sandra.oliveira@liberato.com.br','eaQWYitlMN0u.','2018-05-21 11:11:19','n','n','s');
 
 #
 # Structure for table "c_endereco"
@@ -39,13 +39,13 @@ CREATE TABLE `c_endereco` (
   `estado` char(2) DEFAULT NULL,
   `pais` varchar(50) DEFAULT NULL,
   PRIMARY KEY (`cod_endereco`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
 
 #
 # Data for table "c_endereco"
 #
 
-INSERT INTO `c_endereco` VALUES (1,'Minha Casa Dois',232,'Orsi','Metzler','Campo Bom ','RS','Bra');
+INSERT INTO `c_endereco` VALUES (3,'Minha Casa',238,'Orsi','Metzler','Campo Bom ','RS','Brasil');
 
 #
 # Structure for table "c_evento"
@@ -65,13 +65,13 @@ CREATE TABLE `c_evento` (
   KEY `fk_c_evento_c_administrador1_idx` (`cod_administrador`),
   CONSTRAINT `fk_c_evento_c_administrador1` FOREIGN KEY (`cod_administrador`) REFERENCES `c_administrador` (`cod_administrador`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_cevento_cendereco` FOREIGN KEY (`cod_endereco`) REFERENCES `c_endereco` (`cod_endereco`)
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=latin1;
 
 #
 # Data for table "c_evento"
 #
 
-INSERT INTO `c_evento` VALUES (9,'bla bla kk','1998-05-30 17:30:00',1,'n',3,'texto inicio','texto corpo');
+INSERT INTO `c_evento` VALUES (11,'Speaker','1998-05-30 17:30:00',3,'s',8,'Certificamos que','Participou do nosso evento.'),(12,'Foca no Trabalho','2018-05-24 09:30:00',3,'s',10,'Certificamos que','Participou do Seminário Foca no Trabalho. Sendo que a partir de agora vai ser mais eficiente naquilo que faz.');
 
 #
 # Structure for table "c_acessos_administrador_evento"
@@ -86,12 +86,13 @@ CREATE TABLE `c_acessos_administrador_evento` (
   KEY `fk_acessos_administrador_evento_c_evento1_idx` (`cod_evento`),
   CONSTRAINT `fk_acessos_administrador_evento_c_administrador1` FOREIGN KEY (`cod_administrador`) REFERENCES `c_administrador` (`cod_administrador`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_acessos_administrador_evento_c_evento1` FOREIGN KEY (`cod_evento`) REFERENCES `c_evento` (`cod_evento`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
 
 #
 # Data for table "c_acessos_administrador_evento"
 #
 
+INSERT INTO `c_acessos_administrador_evento` VALUES (4,8,11);
 
 #
 # Structure for table "c_livro"
@@ -102,7 +103,7 @@ CREATE TABLE `c_livro` (
   `numero_do_livro` int(11) NOT NULL,
   `numero_de_folhas` int(11) DEFAULT NULL,
   PRIMARY KEY (`cod_livro`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 #
 # Data for table "c_livro"
@@ -121,7 +122,7 @@ CREATE TABLE `c_folha` (
   PRIMARY KEY (`cod_folha`),
   KEY `fk_cfolha_clivro` (`cod_livro`),
   CONSTRAINT `fk_cfolha_clivro` FOREIGN KEY (`cod_livro`) REFERENCES `c_livro` (`cod_livro`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 #
 # Data for table "c_folha"
@@ -137,7 +138,7 @@ CREATE TABLE `c_participante` (
   `nome` varchar(50) DEFAULT NULL,
   `email` varchar(50) NOT NULL,
   PRIMARY KEY (`cod_participante`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 #
 # Data for table "c_participante"
@@ -171,7 +172,7 @@ CREATE TABLE `c_liberacao_certificado` (
   CONSTRAINT `fk_cliberacao_cadministrador` FOREIGN KEY (`cod_administrador`) REFERENCES `c_administrador` (`cod_administrador`),
   CONSTRAINT `fk_cliberacao_cevento` FOREIGN KEY (`cod_evento`) REFERENCES `c_evento` (`cod_evento`),
   CONSTRAINT `fk_cliberacao_cparticipante` FOREIGN KEY (`cod_participante`) REFERENCES `c_participante` (`cod_participante`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 #
 # Data for table "c_liberacao_certificado"
@@ -195,7 +196,7 @@ CREATE TABLE `c_registro` (
   CONSTRAINT `fk_cregistro_cevento` FOREIGN KEY (`cod_evento`) REFERENCES `c_evento` (`cod_evento`),
   CONSTRAINT `fk_cregistro_cfolha` FOREIGN KEY (`cod_folha`) REFERENCES `c_folha` (`cod_folha`),
   CONSTRAINT `fk_cregistro_cparticipante` FOREIGN KEY (`cod_participante`) REFERENCES `c_participante` (`cod_participante`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 #
 # Data for table "c_registro"
@@ -272,8 +273,16 @@ BEGIN
 	CLOSE c1;
     
     if numero_cursor is null then
-		delete from c_endereco where cod_endereco = cod_endereco_informado;
-		insert into c_endereco values( cod_endereco_informado, descricao_informado, numero_informado, rua_informado, bairro_informado, cidade_informado, estado_informado, pais_informado);
+		update c_endereco 
+        set
+        descricao = descricao_informado, 
+        numero = numero_informado, 
+        rua = rua_informado, 
+        bairro = bairro_informado, 
+        cidade = cidade_informado, 
+        estado = estado_informado, 
+        pais = pais_informado
+        where cod_endereco = cod_endereco_informado;
     	return 3;
     else
 		return 2;

@@ -44,7 +44,7 @@
 												</div>
 											</td>
 											<td><?php echo htmlspecialchars( $value1["data_realizacao"], ENT_COMPAT, 'UTF-8', FALSE ); ?></td>
-											<td><?php echo htmlspecialchars( $value1["descricao_endereco"], ENT_COMPAT, 'UTF-8', FALSE ); ?></td>
+											<td><?php echo htmlspecialchars( $value1["descricao"], ENT_COMPAT, 'UTF-8', FALSE ); ?></td>
 											<td><?php echo htmlspecialchars( $value1["nome"], ENT_COMPAT, 'UTF-8', FALSE ); ?></td>
 											<td>
 												<a href="/eventos-master/admin/eventos/atualizar-evento/<?php echo htmlspecialchars( $value1["cod_evento"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" class="btn btn-primary btn-sm float-right mr-2">

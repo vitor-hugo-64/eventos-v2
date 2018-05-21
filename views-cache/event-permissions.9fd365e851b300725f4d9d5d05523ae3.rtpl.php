@@ -14,9 +14,9 @@
 						<div class="card-header">
 							<span class="h4">
 								<i class="fa fa-location-arrow"></i>
-								Estes são os seus eventos e os que você tem acesso
+								Estas são todas as permissões
 							</span>
-							<a href="/eventos-master/admin/eventos/criar-evento" class="btn btn-success btn-sm float-right btn-block-sm">
+							<a href="/eventos-master/admin/event-permissions/create-event-permission" class="btn btn-success btn-sm float-right btn-block-sm">
 								<i class="fa fa-map-marker"></i> Adicionar
 							</a>
 						</div>
@@ -27,28 +27,25 @@
 										<tr>
 											<th scope="col">
 												<div class="ml-2">
-													Descrição
+													Evento Acessado
 												</div>
 											</th>
-											<th scope="col">Data Realização</th>
-											<th scope="col">Endereco</th>
 											<th scope="col">Administrador</th>
 										</tr>
 									</thead>
 									<tbody>
-										<?php $counter1=-1;  if( isset($events) && ( is_array($events) || $events instanceof Traversable ) && sizeof($events) ) foreach( $events as $key1 => $value1 ){ $counter1++; ?>
+										<?php $counter1=-1;  if( isset($permissions) && ( is_array($permissions) || $permissions instanceof Traversable ) && sizeof($permissions) ) foreach( $permissions as $key1 => $value1 ){ $counter1++; ?>
 										<tr>
 											<td>
 												<div class="ml-2">
 													<?php echo htmlspecialchars( $value1["descricao_evento"], ENT_COMPAT, 'UTF-8', FALSE ); ?>
 												</div>
 											</td>
-											<td><?php echo htmlspecialchars( $value1["data_realizacao"], ENT_COMPAT, 'UTF-8', FALSE ); ?></td>
-											<td><?php echo htmlspecialchars( $value1["descricao"], ENT_COMPAT, 'UTF-8', FALSE ); ?></td>
 											<td><?php echo htmlspecialchars( $value1["nome"], ENT_COMPAT, 'UTF-8', FALSE ); ?></td>
 											<td>
-												<a href="/eventos-master/admin/eventos/atualizar-evento/<?php echo htmlspecialchars( $value1["cod_evento"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" class="btn btn-primary btn-sm float-right mr-2">
-													<i class="fa fa-edit"></i> Editar
+												<a href="/eventos-master/admin/event-permissions/delete-event-permission/<?php echo htmlspecialchars( $value1["cod_acesso"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" class="btn btn-danger btn-sm float-right mr-2">
+													<i class="fa fa-trash"></i>
+													Excluir
 												</a>
 											</td>
 										</tr>
