@@ -1,4 +1,4 @@
-	<div class="content-wrapper bg-white">
+<?php if(!class_exists('Rain\Tpl')){exit;}?>	<div class="content-wrapper bg-white">
 		<div class="container-fluid">
 			<div class="row">
 				<div class="col-12">
@@ -34,9 +34,9 @@
 								<div class="form-group">
 									<label for="cod_endereco">Endereço: </label>
 									<select name="cod_endereco" id="cod_endereco" class="form-control" data-js="input" >
-										{loop="$address"}
-										<option value="{$value.cod_endereco}">{$value.descricao}</option>
-										{/loop}
+										<?php $counter1=-1;  if( isset($address) && ( is_array($address) || $address instanceof Traversable ) && sizeof($address) ) foreach( $address as $key1 => $value1 ){ $counter1++; ?>
+										<option value="<?php echo htmlspecialchars( $value1["cod_endereco"], ENT_COMPAT, 'UTF-8', FALSE ); ?>"><?php echo htmlspecialchars( $value1["descricao"], ENT_COMPAT, 'UTF-8', FALSE ); ?></option>
+										<?php } ?>
 									</select>
 								</div>
 							</div>

@@ -36,7 +36,6 @@
 		}, false);
 	}
 
-
 	var status = (w.location.href).charAt((w.location.href).length-1);
 	if (status) {
 		var modal = "#modal" + status;

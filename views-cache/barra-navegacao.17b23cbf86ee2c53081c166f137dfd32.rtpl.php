@@ -1,8 +1,8 @@
-<body class="bg-dark fixed-nav sticky-footer" id="page-top">
+<?php if(!class_exists('Rain\Tpl')){exit;}?><body class="bg-dark fixed-nav sticky-footer" id="page-top">
 
 	<!-- Navegação -->
 	<nav class="navbar navbar-expand-lg navbar-dark fixed-top bg-default" id="mainNav">
-		<a href="/eventos-master/admin" class="navbar-brand">{$admin.nome}</a>
+		<a href="/eventos-master/admin" class="navbar-brand"><?php echo htmlspecialchars( $admin["nome"], ENT_COMPAT, 'UTF-8', FALSE ); ?></a>
 		<button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarCurso" aria-control="navbarCurso" aria-expanded="false" aria-label="Navegação Toggle">
 			<span class="navbar-toggler-icon"></span>
 		</button>
@@ -20,7 +20,7 @@
 						<span class="nav-link-text">Eventos</span>
 					</a>
 				</li>				
-				{if="$admin.super_admin == 's'"}													
+				<?php if( $admin["super_admin"] == 's' ){ ?>													
 				<li class="nav-item"> 
 					<a class="nav-link nav-link-collapse collapse" href="#linksAdministrador" data-toggle="collapse" data-parent="#linkAdm">
 						<i class="fa fa-user"></i>
@@ -32,7 +32,7 @@
 						</li>
 					</ul>					
 				</li>
-				{/if}
+				<?php } ?>
 			</ul>
 			<ul class="navbar-nav sidenav-toggler">
 				<li class="nav-item">

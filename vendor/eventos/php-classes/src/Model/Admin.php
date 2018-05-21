@@ -18,7 +18,11 @@ class Admin extends Model
 	public static function login( $email, $senha)
 	{
 		$sql = new Sql();
-		$results = $sql->select("SELECT * from c_administrador WHERE email = :email", array( ':email' => $email));
+		$results = $sql->select("SELECT * from c_administrador WHERE email = :email", 
+			array(
+				':email' => $email
+			)
+		);
 
 		if (count($results) === 0) {
 			header('Location: /eventos-master/');
@@ -32,11 +36,15 @@ class Admin extends Model
 			$admin = new Admin();
 			$admin->setData($datas);
 			$_SESSION[Admin::SESSION] = $admin->getDatas();
-			return $admin;
+			echo json_encode($_SESSION[Admin::SESSION]);
+			if ($_SESSION[Admin::SESSION]['trocar_senha'] === 'n') {
+				return '/admin';
+			} else {
+				return '/trocar-senha';
+			}
 
 		} else {
-			header('Location: /eventos-master/');
-			exit;
+			return '/?1';
 		}
 
 	}
@@ -46,10 +54,23 @@ class Admin extends Model
 		$_SESSION[Admin::SESSION] = NULL;
 	}
 
-	public function verifyLogin()
+	public static function verifyLogin()
 	{
 		if (!isset($_SESSION[Admin::SESSION]) || !$_SESSION[Admin::SESSION] || $_SESSION[Admin::SESSION]['cod_administrador'] < 0) {
 			header('Location: /eventos-master/');
+			exit;
+		} else {
+			if ($_SESSION[Admin::SESSION]['conta_ativa'] === 'n') {
+				header('Location: /eventos-master/');
+				exit;
+			}
+		}
+	}
+
+	public static function verifyPassword()
+	{
+		if ($_SESSION[Admin::SESSION]['trocar_senha'] === 'n') {
+			header('Location: /eventos-master/admin');
 			exit;
 		}
 	}	
@@ -99,6 +120,31 @@ class Admin extends Model
 			)
 		);
 		return ($response[0]['CA']);
+	}
+
+	public static function alterPassword( $datas = array(), $idadmin, $email)
+	{
+		$sql = new Sql();
+		$updateRow = "SELECT ALTERAR_SENHA( :senha_nova, :idadmin) AS US FROM dual";
+
+		$response = $sql->select( $updateRow, 
+			array(
+				':senha_nova' => crypt($datas['senha'], 'ead'),
+				':idadmin' => $idadmin
+			)
+		);
+
+		$results = $sql->select("SELECT * from c_administrador WHERE email = :email", 
+			array(
+				':email' => $email
+			)
+		);
+
+		$admin = new Admin();
+		$admin->setData($results[0]);
+		$_SESSION[Admin::SESSION] = $admin->getDatas();
+
+		return ($response[0]['US']);
 	}
 
 

@@ -1,4 +1,4 @@
-	<div class="content-wrapper bg-white">
+<?php if(!class_exists('Rain\Tpl')){exit;}?>	<div class="content-wrapper bg-white">
 		<div class="container-fluid">
 			<div class="row">
 				<div class="col-12">
@@ -36,23 +36,23 @@
 										</tr>
 									</thead>
 									<tbody>
-										{loop="$events"}
+										<?php $counter1=-1;  if( isset($events) && ( is_array($events) || $events instanceof Traversable ) && sizeof($events) ) foreach( $events as $key1 => $value1 ){ $counter1++; ?>
 										<tr>
 											<td>
 												<div class="ml-2">
-													{$value.descricao_evento}
+													<?php echo htmlspecialchars( $value1["descricao_evento"], ENT_COMPAT, 'UTF-8', FALSE ); ?>
 												</div>
 											</td>
-											<td>{$value.data_realizacao}</td>
-											<td>{$value.descricao}</td>
-											<td>{$value.nome}</td>
+											<td><?php echo htmlspecialchars( $value1["data_realizacao"], ENT_COMPAT, 'UTF-8', FALSE ); ?></td>
+											<td><?php echo htmlspecialchars( $value1["descricao"], ENT_COMPAT, 'UTF-8', FALSE ); ?></td>
+											<td><?php echo htmlspecialchars( $value1["nome"], ENT_COMPAT, 'UTF-8', FALSE ); ?></td>
 											<td>
-												<a href="/eventos-master/admin/eventos/atualizar-evento/{$value.cod_evento}" class="btn btn-primary btn-sm float-right mr-2">
+												<a href="/eventos-master/admin/eventos/atualizar-evento/<?php echo htmlspecialchars( $value1["cod_evento"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" class="btn btn-primary btn-sm float-right mr-2">
 													<i class="fa fa-edit"></i> Editar
 												</a>
 											</td>
 										</tr>
-										{/loop}
+										<?php } ?>
 									</tbody>
 								</table>
 							</div>

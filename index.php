@@ -23,8 +23,24 @@ $app->get( '/', function ()
 
 $app->post( '/', function ()
 {
-	Admin::login( $_POST['email'], $_POST['senha']);
-	header('Location: /eventos-master/admin');
+	$response = Admin::login( $_POST['email'], $_POST['senha']);
+	header('Location: /eventos-master'.$response);
+	exit;
+});
+
+$app->get( '/trocar-senha', function ()
+{
+	Admin::verifyLogin();
+	Admin::verifyPassword();
+	$datas = array('admin' => $_SESSION['Admin']);
+	$page = new Page();
+	$files = array('cabecalho', 'trocar-senha', 'rodape');
+	$page->drawPage( $files, $datas);
+});
+$app->post( '/trocar-senha', function ()
+{
+	$response = Admin::alterPassword( $_POST, $_SESSION['Admin']['cod_administrador'], $_SESSION['Admin']['email']);
+	header('Location: /eventos-master/admin?'.$response);
 	exit;
 });
 
@@ -40,22 +56,26 @@ $app->get( '/admin', function ()
 	Admin::verifyLogin();
 	$pageAdmin = new PageAdmin();
 	$files = [ 'cabecalho-um', 'barra-navegacao', 'index', 'rodape-um'];
-	$pageAdmin->drawPage( $files);
+	$admin = array( 'admin' => $_SESSION['Admin']);
+	$pageAdmin->drawPage( $files, $admin);
 });
 
 $app->get( '/admin/enderecos', function ()
 {
-	$address = [ 'address' => Address::listAll()];
+	Admin::verifyLogin();
 	$pageAdmin = new PageAdmin();
 	$files = [ 'cabecalho-dois', 'barra-navegacao', 'enderecos', 'rodape-dois'];
-	$pageAdmin->drawPage( $files, $address);
+	$datas = array( 'address' => Address::listAll(), 'admin' => $_SESSION['Admin']);
+	$pageAdmin->drawPage( $files, $datas);
 });
 
 $app->get( '/admin/enderecos/cadastrar-endereco', function ()
 {
+	Admin::verifyLogin();
 	$pageAdmin = new PageAdmin();
 	$files = [ 'cabecalho-tres', 'barra-navegacao', 'cadastrar-endereco', 'rodape-tres'];
-	$pageAdmin->drawPage( $files);
+	$admin = array( 'admin' => $_SESSION['Admin']);
+	$pageAdmin->drawPage( $files, $admin);
 });
 
 $app->post( '/admin/enderecos/cadastrar-endereco', function ()
@@ -68,12 +88,13 @@ $app->post( '/admin/enderecos/cadastrar-endereco', function ()
 
 $app->get( '/admin/enderecos/atualizar-endereco/:idaddress', function ($idaddress)
 {
+	Admin::verifyLogin();
 	$address = new Address();
 	$address->get((int)$idaddress);
-	$adr = [ 'address' => $address->getDatas()];
+	$datas = [ 'address' => $address->getDatas(),  'admin' => $_SESSION['Admin']];
 	$pageAdmin = new PageAdmin();
 	$files = [ 'cabecalho-quatro', 'barra-navegacao', 'atualizar-endereco', 'rodape-quatro'];
-	$pageAdmin->drawPage( $files, $adr);
+	$pageAdmin->drawPage( $files, $datas);
 });
 
 $app->post( '/admin/enderecos/atualizar-endereco/:idaddress', function ($idaddress)
@@ -87,7 +108,8 @@ $app->post( '/admin/enderecos/atualizar-endereco/:idaddress', function ($idaddre
 
 $app->get( '/admin/eventos', function ()
 {
-	$datas = array( 'events' => Event::listAll());
+	Admin::verifyLogin();
+	$datas = array( 'events' => Event::listAll(), 'admin' => $_SESSION['Admin']);
 	$pageAdmin = new PageAdmin();
 	$files = array( 'cabecalho-dois', 'barra-navegacao', 'eventos', 'rodape-dois');
 	$pageAdmin->drawPage($files, $datas);
@@ -95,32 +117,62 @@ $app->get( '/admin/eventos', function ()
 
 $app->get( '/admin/eventos/criar-evento', function ()
 {
-	$address = array( 'address' => Address::listAll());	
+	Admin::verifyLogin();
+	$datas = array( 'address' => Address::listAll(), 'admin' => $_SESSION['Admin']);	
 	$pageAdmin = new pageAdmin();
 	$files = array( 'cabecalho-tres', 'barra-navegacao', 'criar-evento', 'rodape-tres');
-	$pageAdmin->drawPage( $files, $address);
+	$pageAdmin->drawPage( $files, $datas);
 });
 
 $app->post( '/admin/eventos/criar-evento', function ()
 {
-	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	$event = new Event();
-	$event->save($_POST);
+	$response = $event->save( $_POST, $_SESSION['Admin']['cod_administrador']);
+	header('Location: /eventos-master/admin/eventos');
+	exit;
+});
+
+$app->get( '/admin/eventos/atualizar-evento/:idevento', function ($idevento)
+{
+	Admin::verifyLogin();
+	$event = new Event();
+	$event->get((int)$idevento);
+	$datas = array( 'admin' => $_SESSION['Admin'], 'event' => $event->getDatas(), 'address' => Address::listAll());
+	$pageAdmin = new pageAdmin();
+	$files = array( 'cabecalho-quatro', 'barra-navegacao', 'atualizar-evento', 'rodape-quatro');
+	$pageAdmin->drawPage( $files, $datas);
+});
+
+$app->post( '/admin/eventos/atualizar-evento/:idevento/:inscricoesabertas', function ( $idevento, $inscricoesabertas)
+{
+	$event = new Event();
+	$event->setdescricao_evento($_POST['descricao_evento']);
+	$event->setdata_realizacao($_POST['data_realizacao']." ".$_POST['hora']);
+	$event->setcod_endereco($_POST['cod_endereco']);
+	$event->setinicio_certificado($_POST['inicio_certificado']);
+	$event->setcorpo_certificado($_POST['corpo_certificado']);
+	$event->setinscricoes_abertas($inscricoesabertas);
+	$event->update($idevento);
+	// header('Location: /eventos-master/admin/eventos');
+	// exit;
 });
 
 $app->get( '/admin/administradores', function ()
 {
+	Admin::verifyLogin();
 	$pageAdmin = new PageAdmin();
-	$admins = [ 'admins' => Admin::listAll()];
+	$datas = [ 'admins' => Admin::listAll(), 'admin' => $_SESSION['Admin']];
 	$files = [ 'cabecalho-dois', 'barra-navegacao', 'administradores', 'rodape-dois'];
-	$pageAdmin->drawPage( $files, $admins);
+	$pageAdmin->drawPage( $files, $datas);
 });
 
 $app->get( '/admin/administradores/cadastrar-administrador', function ()
 {
+	Admin::verifyLogin();
 	$pageAdmin = new PageAdmin();
 	$files = [ 'cabecalho-tres', 'barra-navegacao', 'cadastrar-administrador', 'rodape-tres'];
-	$pageAdmin->drawPage( $files);
+	$admin = array( 'admin' => $_SESSION['Admin']);
+	$pageAdmin->drawPage( $files, $admin);
 });
 
 $app->post( '/admin/administradores/cadastrar-administrador', function ()
@@ -133,11 +185,12 @@ $app->post( '/admin/administradores/cadastrar-administrador', function ()
 
 $app->get( '/admin/administradores/atualizar-administrador/:idadmin', function ($idadmin)
 {
+	Admin::verifyLogin();
 	$admin = new Admin();
 	$admin->get((int)$idadmin);
 	$pageAdmin = new PageAdmin();
 	$files = [ 'cabecalho-quatro', 'barra-navegacao', 'atualizar-administrador', 'rodape-quatro'];
-	$pageAdmin->drawPage( $files, array( 'admin' => $admin->getDatas()));
+	$pageAdmin->drawPage( $files, array( 'admins' => $admin->getDatas(), 'admin' => $_SESSION['Admin']));
 });
 
 $app->post( '/admin/administradores/atualizar-administrador/:idadmin', function ($idadmin)
